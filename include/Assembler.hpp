@@ -13,7 +13,7 @@ class Assembler {
         void assembleProgram();
 
     private:
-        string infile;
+        filesystem::path infile;
         Parser parser;
         SymbolTable symbolTable {};
         void pass1();

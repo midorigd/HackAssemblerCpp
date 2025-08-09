@@ -26,7 +26,6 @@ Parser::Parser(const string& filename) : asmFile(filename) {
 
 bool Parser::hasMoreCommands() {
     return asmFile.peek() != EOF;
-    // return static_cast<bool>(asmFile);
 }
 
 string Parser::advance() {

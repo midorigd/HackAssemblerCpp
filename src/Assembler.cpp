@@ -10,7 +10,7 @@ using namespace std;
 Assembler::Assembler(const string& assemblyFile) : infile(assemblyFile), parser(assemblyFile) {}
 
 void Assembler::assembleProgram() {
-    string outfile = infile.substr(0, infile.length() - 4) + ".hack";
+    string outfile = infile.replace_extension(".hack").string();
 
     pass1();
     pass2(outfile);
