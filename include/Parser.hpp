@@ -21,8 +21,7 @@ class Parser {
         void reset();
         COMMAND_TYPE commandType() const;
         string symbol() const;
-        void writeLine() const;
-        void writeContents();
+        void closeFile();
         
         string dest() const { return destStr; }
         string comp() const { return compStr; }

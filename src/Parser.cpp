@@ -31,9 +31,9 @@ bool Parser::hasMoreCommands() {
 string Parser::advance() {
     while (hasMoreCommands()) {
         getline(asmFile >> ws, line);
-
+        
         line = regex_replace(line, commentPattern, commentReplace);
-
+        
         if (!line.empty()) {
             if (commandType() == COMMAND_TYPE::C) {
                 splitCommand();
@@ -41,7 +41,7 @@ string Parser::advance() {
             return line;
         }
     }
-
+    
     return "";
 }
 
@@ -65,24 +65,17 @@ COMMAND_TYPE Parser::commandType() const {
 string Parser::symbol() const {
     switch (commandType()) {
         case COMMAND_TYPE::A:
-            return line.substr(1, line.length());
+        return line.substr(1, line.length());
         case COMMAND_TYPE::L:
-            return line.substr(1, line.length() - 2);
+        return line.substr(1, line.length() - 2);
         default:
-            cerr << "Type C_COMMAND does not have symbol\n";
-            exit(1);
+        cerr << "Type C_COMMAND does not have symbol\n";
+        exit(1);
     }
 }
 
-void Parser::writeLine() const {
-    cout << line << '\n';
-}
-
-void Parser::writeContents() {
-    while (hasMoreCommands()) {
-        getline(asmFile, line);
-        writeLine();
-    }
+void Parser::closeFile() {
+    asmFile.close();
 }
 
 void Parser::splitCommand() {

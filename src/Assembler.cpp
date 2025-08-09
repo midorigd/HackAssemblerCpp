@@ -7,13 +7,16 @@
 #include <string>
 using namespace std;
 
-Assembler::Assembler(const string& assemblyFile) : infile(assemblyFile), parser(assemblyFile) {}
+Assembler::Assembler(const string& assemblyFile) :
+    infile(assemblyFile),
+    parser(assemblyFile),
+    outfile(infile.replace_extension(".hack").string()) {}
 
 void Assembler::assembleProgram() {
-    string outfile = infile.replace_extension(".hack").string();
-
     pass1();
-    pass2(outfile);
+    pass2();
+
+    parser.closeFile();
 }
 
 void Assembler::pass1() {
@@ -30,7 +33,7 @@ void Assembler::pass1() {
     }
 }
 
-void Assembler::pass2(const string& outfile) {
+void Assembler::pass2() {
     ofstream binaryFile(outfile);
 
     parser.reset();

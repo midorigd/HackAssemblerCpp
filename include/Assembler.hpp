@@ -14,10 +14,12 @@ class Assembler {
 
     private:
         filesystem::path infile;
+        string outfile;
         Parser parser;
         SymbolTable symbolTable {};
+
         void pass1();
-        void pass2(const string& outfile);
+        void pass2();
         string lookupAddress(const string& symbol);
         bool strIsDigit(const string& symbol) const;
 };
