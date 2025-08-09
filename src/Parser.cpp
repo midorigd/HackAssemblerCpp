@@ -33,6 +33,7 @@ string Parser::advance() {
         getline(asmFile >> ws, line);
         
         line = regex_replace(line, commentPattern, commentReplace);
+        line.erase(remove(line.begin(), line.end(), '\r'), line.end());
         
         if (!line.empty()) {
             if (commandType() == COMMAND_TYPE::C) {
