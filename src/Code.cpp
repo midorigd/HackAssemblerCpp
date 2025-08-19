@@ -12,17 +12,14 @@ string Code::getDest(const string& dest) const {
 string Code::getComp(const string& compRef) const {
     string comp { compRef };
     size_t hasM { comp.find('M', 0) };
-    char registerBit {};
+    size_t hasA { comp.find('A', 0) };
+    char registerBit { '0' };
     
     if (hasM != string::npos) {
         registerBit = '1';
         comp.replace(hasM, 1, "X");
-    } else {
-        registerBit = '0';
-        size_t hasA { comp.find('A', 0) };
-        if (hasA != string::npos) {
-            comp.replace(hasA, 1, "X");
-        }
+    } else if (hasA != string::npos) {
+        comp.replace(hasA, 1, "X");
     }
 
     return registerBit + compLookup.at(comp);

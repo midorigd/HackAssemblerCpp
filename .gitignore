@@ -1,6 +1,8 @@
 build/
 data/
 
+.vscode/
+
 *.o
 *.out
 *.exe
