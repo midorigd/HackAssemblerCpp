@@ -4,7 +4,9 @@
 #include <bitset>
 #include <fstream>
 #include <iostream>
-#include <string>
+
+namespace HackAssembler {
+
 using namespace std;
 
 Assembler::Assembler(const string& assemblyFile) :
@@ -74,4 +76,6 @@ bool Assembler::strIsDigit(const string& symbol) const {
         }
     }
     return true;
+}
+
 }

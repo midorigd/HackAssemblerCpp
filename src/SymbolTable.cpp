@@ -1,8 +1,7 @@
 #include "SymbolTable.hpp"
 
-#include <iostream>
-#include <string>
-#include <unordered_map>
+namespace HackAssembler {
+
 using namespace std;
 
 SymbolTable::SymbolTable() :
@@ -63,4 +62,6 @@ void SymbolTable::printTable() const {
     for (unordered_map<string, unsigned int>::const_iterator it = symbolTable.begin(); it != symbolTable.end(); ++it) {
         cout << it->first << ":\t" << it->second << '\n';
     }
+}
+
 }

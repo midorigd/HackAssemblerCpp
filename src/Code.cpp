@@ -1,8 +1,7 @@
 #include "Code.hpp"
 
-#include <iostream>
-#include <string>
-#include <unordered_map>
+namespace HackAssembler {
+
 using namespace std;
 
 string Code::getDest(const string& dest) const {
@@ -77,3 +76,5 @@ unordered_map<string, string> Code::jumpLookup {
     {"JLE", "110"},
     {"JMP", "111"}
 };
+
+}

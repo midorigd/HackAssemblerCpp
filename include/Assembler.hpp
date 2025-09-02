@@ -5,23 +5,33 @@
 #include "SymbolTable.hpp"
 
 #include <string>
-using namespace std;
+
+namespace HackAssembler {
 
 class Assembler {
-    public:
-        Assembler(const string& assemblyFile);
-        void assembleProgram();
+public:
+    /**
+     * Creates a new Assembler module to assemble code from the provided file path.
+     */
+    Assembler(const std::string& assemblyFile);
 
-    private:
-        filesystem::path infile;
-        string outfile;
-        Parser parser;
-        SymbolTable symbolTable {};
+    /**
+     * Translates the assembly code in the file to machine code and writes it to output.
+     */
+    void assembleProgram();
 
-        void pass1();
-        void pass2();
-        string lookupAddress(const string& symbol);
-        bool strIsDigit(const string& symbol) const;
+private:
+    std::filesystem::path infile;
+    std::string outfile;
+    Parser parser;
+    SymbolTable symbolTable {};
+
+    void pass1();
+    void pass2();
+    std::string lookupAddress(const std::string& symbol);
+    bool strIsDigit(const std::string& symbol) const;
 };
+
+}
 
 #endif

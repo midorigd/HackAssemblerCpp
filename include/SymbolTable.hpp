@@ -4,22 +4,48 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
-using namespace std;
+
+namespace HackAssembler {
 
 class SymbolTable {
-    public:
-        SymbolTable();
-        unsigned int addEntry(const string& symbol);
-        void addEntry(const string& symbol, unsigned int address);
-        bool contains(const string& symbol) const;
-        unsigned int getAddressOf(const string& symbol) const;
-        void printTable() const;
+public:
+    /**
+     * Creates a new SymbolTable module with the Hack computer's predefined symbol mappings
+     */
+    SymbolTable();
 
-    private:
-        unsigned int nextAddress;
-        unordered_map<string, unsigned int> symbolTable;
+    /**
+     * Adds the provided symbol to the symbol table using the next free memory address and returns its address
+     */
+    unsigned int addEntry(const std::string& symbol);
 
-        unsigned int getNextFreeAddress();
-    };
+    /**
+     * Adds the provided symbol to the symbol table using the provided memory address
+     */
+    void addEntry(const std::string& symbol, unsigned int address);
+
+    /**
+     * Returns whether or not the provided symbol exists in the symbol table
+     */
+    bool contains(const std::string& symbol) const;
+
+    /**
+     * Returns the memory address of the provided symbol
+     */
+    unsigned int getAddressOf(const std::string& symbol) const;
+
+    /**
+     * Prints the contents of the symbol table
+     */
+    void printTable() const;
+
+private:
+    unsigned int nextAddress;
+    std::unordered_map<std::string, unsigned int> symbolTable;
+
+    unsigned int getNextFreeAddress();
+};
+
+}
 
 #endif

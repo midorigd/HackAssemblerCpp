@@ -5,41 +5,77 @@
 #include <iostream>
 #include <regex>
 #include <string>
-using namespace std;
+
+namespace HackAssembler {
 
 enum class COMMAND_TYPE {
     A, C, L, NONE
 };
 
-ostream& operator<<(ostream& os, COMMAND_TYPE type);
+std::ostream& operator<<(std::ostream& os, COMMAND_TYPE type);
 
 class Parser {
-    public:
-        Parser(const string& filename);
-        bool hasMoreCommands();
-        string advance();
-        void reset();
-        COMMAND_TYPE commandType() const;
-        string symbol() const;
-        void closeFile();
-        
-        string dest() const { return destStr; }
-        string comp() const { return compStr; }
-        string jump() const { return jumpStr; }
+public:
+    /**
+     * Creates a new Parser module to read and parse assembly instructions from the provided file.
+     */
+    Parser(const std::string& filename);
 
-    private:
-        static regex commentPattern;
-        static string commentReplace;
-        static regex compPattern;
+    /**
+     * Returns whether or not there are more assembly instructions to read from input.
+     */
+    bool hasMoreCommands();
 
-        ifstream asmFile;
-        string line;
+    /**
+     * Reads in and returns the next assembly instruction from input.
+     */
+    std::string advance();
 
-        string destStr;
-        string compStr;
-        string jumpStr;
+    /**
+     * Resets the cursor's position to the beginning of the input file.
+     */
+    void reset();
+    
+    /**
+     * Returns the type of the current assembly instruction (A, C, or L)
+     */
+    COMMAND_TYPE commandType() const;
 
-        void splitCommand();
+    /**
+     * Returns the symbol of the current assembly instruction; only applicable to A- and L-instructions
+     */
+    std::string symbol() const;
+
+    /**
+     * Returns the destination code of the current assembly instruction, only applicable to C-instructions
+     */
+    std::string dest() const { return destStr; }
+
+    /**
+     * Returns the computation code of the current assembly instruction, only applicable to C-instructions
+     */
+    std::string comp() const { return compStr; }
+
+    /**
+     * Returns the jump code of the current assembly instruction, only applicable to C-instructions
+     */
+    std::string jump() const { return jumpStr; }
+
+private:
+    static std::regex commentPattern;
+    static std::string commentReplace;
+    static std::regex compPattern;
+
+    std::ifstream asmFile;
+    std::string line;
+
+    std::string destStr;
+    std::string compStr;
+    std::string jumpStr;
+
+    void splitCommand();
 };
+
+}
 
 #endif

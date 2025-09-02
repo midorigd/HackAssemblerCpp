@@ -1,9 +1,7 @@
 #include "Parser.hpp"
 
-#include <fstream>
-#include <iostream>
-#include <regex>
-#include <string>
+namespace HackAssembler {
+
 using namespace std;
 
 ostream& operator<<(ostream& os, COMMAND_TYPE type) {
@@ -75,10 +73,6 @@ string Parser::symbol() const {
     }
 }
 
-void Parser::closeFile() {
-    asmFile.close();
-}
-
 void Parser::splitCommand() {
     smatch matches;
     regex_search(line, matches, compPattern);
@@ -90,3 +84,5 @@ void Parser::splitCommand() {
 regex Parser::commentPattern("//.*");
 string Parser::commentReplace = "";
 regex Parser::compPattern("(?:([ADM]*)=)?([01AMD!\\|&\\-\\+]*)(?:;([JGTEQLNMP]*))?");
+
+}
