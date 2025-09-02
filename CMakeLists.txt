@@ -14,3 +14,5 @@ add_executable(HackAssembler
     src/Parser.cpp
     src/SymbolTable.cpp
 )
+
+set_target_properties(HackAssembler PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")

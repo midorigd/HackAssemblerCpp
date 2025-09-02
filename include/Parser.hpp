@@ -37,27 +37,27 @@ public:
     void reset();
     
     /**
-     * Returns the type of the current assembly instruction (A, C, or L)
+     * Returns the type of the current assembly instruction (A, C, or L).
      */
     COMMAND_TYPE commandType() const;
 
     /**
-     * Returns the symbol of the current assembly instruction; only applicable to A- and L-instructions
+     * Returns the symbol of the current assembly instruction. Only applicable to A- and L-instructions
      */
     std::string symbol() const;
 
     /**
-     * Returns the destination code of the current assembly instruction, only applicable to C-instructions
+     * Returns the destination code of the current assembly instruction. Only applicable to C-instructions
      */
     std::string dest() const { return destStr; }
 
     /**
-     * Returns the computation code of the current assembly instruction, only applicable to C-instructions
+     * Returns the computation code of the current assembly instruction. Only applicable to C-instructions
      */
     std::string comp() const { return compStr; }
 
     /**
-     * Returns the jump code of the current assembly instruction, only applicable to C-instructions
+     * Returns the jump code of the current assembly instruction. Only applicable to C-instructions
      */
     std::string jump() const { return jumpStr; }
 

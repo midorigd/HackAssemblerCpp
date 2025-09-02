@@ -30,7 +30,7 @@ make
 Run the following from the build directory:
 
 ```zsh
-./HackAssembler path/to/file.asm
+bin/HackAssembler path/to/file.asm
 ```
 
 ## Notes

@@ -12,17 +12,19 @@ using namespace std;
 Assembler::Assembler(const string& assemblyFile) :
     infile(assemblyFile),
     parser(assemblyFile),
-    outfile(infile.replace_extension(".hack").string()) {}
+    outfile(infile.replace_extension(".hack")) {}
 
 void Assembler::assembleProgram() {
     pass1();
     pass2();
-
-    parser.closeFile();
 }
 
+/**
+ * Reads the entire assembly file and adds found labels to symbol table,
+ * mapping them to the line numbers they were found at.
+ */
 void Assembler::pass1() {
-    unsigned int lineCount = 0;
+    unsigned int lineCount { 0 };
 
     while (parser.hasMoreCommands()) {
         parser.advance();
@@ -35,8 +37,11 @@ void Assembler::pass1() {
     }
 }
 
+/**
+ * Reads the entire assembly file and translates and outputs all non-label instructions.
+ */
 void Assembler::pass2() {
-    ofstream binaryFile(outfile);
+    ofstream binaryFile { outfile };
 
     parser.reset();
     Code code;
@@ -44,19 +49,20 @@ void Assembler::pass2() {
     while (parser.hasMoreCommands()) {
         parser.advance();
 
-        if (parser.commandType() == COMMAND_TYPE::A) {
-            binaryFile << lookupAddress(parser.symbol()) << '\n';
-        } else if (parser.commandType() == COMMAND_TYPE::C) {
-            binaryFile << code.encode(parser.dest(), parser.comp(), parser.jump()) << '\n';
+        switch (parser.commandType()) {
+            case COMMAND_TYPE::A:
+                binaryFile << lookupAddress(parser.symbol()) << '\n';
+                break;
+            case COMMAND_TYPE::C:
+                binaryFile << code.encode(parser.dest(), parser.comp(), parser.jump()) << '\n';
+                break;
         }
     }
-
-    binaryFile.close();
 }
 
 string Assembler::lookupAddress(const string& symbol) {
     unsigned int address;
-    
+
     if (strIsDigit(symbol)) {
         address = static_cast<unsigned int>(stoi(symbol));
     } else if (symbolTable.contains(symbol)) {
@@ -65,11 +71,11 @@ string Assembler::lookupAddress(const string& symbol) {
         address = symbolTable.addEntry(symbol);
     }
 
-    bitset<16> binary(address);
+    bitset<16> binary { address };
     return binary.to_string();
 }
 
-bool Assembler::strIsDigit(const string& symbol) const {
+bool Assembler::strIsDigit(const string& symbol) {
     for (size_t i = 0; i < symbol.length(); ++i) {
         if (!isdigit(symbol[i])) {
             return false;

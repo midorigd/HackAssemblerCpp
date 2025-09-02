@@ -8,6 +8,8 @@
 
 namespace HackAssembler {
 
+namespace fs = std::filesystem;
+
 class Assembler {
 public:
     /**
@@ -21,15 +23,16 @@ public:
     void assembleProgram();
 
 private:
-    std::filesystem::path infile;
-    std::string outfile;
+    fs::path infile;
+    fs::path outfile;
     Parser parser;
     SymbolTable symbolTable {};
+
+    static bool strIsDigit(const std::string& symbol);
 
     void pass1();
     void pass2();
     std::string lookupAddress(const std::string& symbol);
-    bool strIsDigit(const std::string& symbol) const;
 };
 
 }

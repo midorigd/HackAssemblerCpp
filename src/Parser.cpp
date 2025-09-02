@@ -18,7 +18,7 @@ ostream& operator<<(ostream& os, COMMAND_TYPE type) {
 Parser::Parser(const string& filename) : asmFile(filename) {
     if (!asmFile) {
         cerr << "File not opened.\n";
-        exit(1);
+        exit(2);
     }
 }
 
@@ -29,10 +29,10 @@ bool Parser::hasMoreCommands() {
 string Parser::advance() {
     while (hasMoreCommands()) {
         getline(asmFile >> ws, line);
-        
+
         line = regex_replace(line, commentPattern, commentReplace);
         line.erase(remove(line.begin(), line.end(), '\r'), line.end());
-        
+
         if (!line.empty()) {
             if (commandType() == COMMAND_TYPE::C) {
                 splitCommand();
@@ -40,7 +40,7 @@ string Parser::advance() {
             return line;
         }
     }
-    
+
     return "";
 }
 
@@ -54,22 +54,20 @@ COMMAND_TYPE Parser::commandType() const {
         return COMMAND_TYPE::A;
     } else if (line.compare(0, 1, "(") == 0 && line.compare(line.length() - 1, 1, ")") == 0) {
         return COMMAND_TYPE::L;
-    } else if (!line.empty()) {
-        return COMMAND_TYPE::C;
     } else {
-        return COMMAND_TYPE::NONE;
+        return COMMAND_TYPE::C;
     }
 }
 
 string Parser::symbol() const {
     switch (commandType()) {
         case COMMAND_TYPE::A:
-        return line.substr(1, line.length());
+            return line.substr(1, line.length());
         case COMMAND_TYPE::L:
-        return line.substr(1, line.length() - 2);
+            return line.substr(1, line.length() - 2);
         default:
-        cerr << "Type C_COMMAND does not have symbol\n";
-        exit(1);
+            cerr << "Type C_COMMAND does not have symbol\n";
+            exit(3);
     }
 }
 

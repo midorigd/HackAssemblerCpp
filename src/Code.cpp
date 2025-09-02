@@ -11,14 +11,12 @@ string Code::getDest(const string& dest) const {
 string Code::getComp(const string& compRef) const {
     string comp { compRef };
     size_t hasM { comp.find('M', 0) };
-    size_t hasA { comp.find('A', 0) };
     char registerBit { '0' };
-    
+
+    // replace M with A for easier comp lookup
     if (hasM != string::npos) {
         registerBit = '1';
-        comp.replace(hasM, 1, "X");
-    } else if (hasA != string::npos) {
-        comp.replace(hasA, 1, "X");
+        comp.replace(hasM, 1, "A");
     }
 
     return registerBit + compLookup.at(comp);
@@ -28,6 +26,13 @@ string Code::getJump(const string& jump) const {
     return jumpLookup.at(jump);
 }
 
+/**
+ * 16-bit C-instruction format: 111DDDRCCCCCCJJJ
+ * DDD: dest
+ * R: register bit (M = 1, A = 0)
+ * CCCCCC: comp
+ * JJJ: jump
+ */
 string Code::encode(const string& dest, const string& comp, const string& jump) const {
     return "111" + getComp(comp) + getDest(dest) + getJump(jump);
 }
@@ -37,20 +42,20 @@ unordered_map<string, string> Code::compLookup {
     {"1", "111111"},
     {"-1", "111010"},
     {"D", "001100"},
-    {"X", "110000"},
+    {"A", "110000"},
     {"!D", "001101"},
-    {"!X", "110001"},
+    {"!A", "110001"},
     {"-D", "001111"},
-    {"-X", "110011"},
+    {"-A", "110011"},
     {"D+1", "011111"},
-    {"X+1", "110111"},
+    {"A+1", "110111"},
     {"D-1", "001110"},
-    {"X-1", "110010"},
-    {"D+X", "000010"},
-    {"D-X", "010011"},
-    {"X-D", "000111"},
-    {"D&X", "000000"},
-    {"D|X", "010101"}
+    {"A-1", "110010"},
+    {"D+A", "000010"},
+    {"D-A", "010011"},
+    {"A-D", "000111"},
+    {"D&A", "000000"},
+    {"D|A", "010101"}
 };
 
 unordered_map<string, string> Code::destLookup {
