@@ -39,6 +39,12 @@ This is my first project on GitHub and my first project in C++!
 
 I'm very new to all of this so any feedback is welcome :)
 
+My Python implementation of this project: [HackAssembler (Python)](https://github.com/midorigd/HackAssemblerPython/)
+
+### Stats
+
+569 lines (456 loc)
+
 ## References
 
 [nand2tetris](https://www.nand2tetris.org/course)
